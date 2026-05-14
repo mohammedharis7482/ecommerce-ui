@@ -4,15 +4,20 @@ export const WishlistContext =
   createContext();
 
 function WishlistProvider({ children }) {
+
   const [wishlistItems, setWishlistItems] =
     useState([]);
 
+  // ADD TO WISHLIST
+
   const addToWishlist = (product) => {
+
     const exists = wishlistItems.find(
       (item) => item.id === product.id
     );
 
     if (!exists) {
+
       setWishlistItems([
         ...wishlistItems,
         product,
@@ -20,7 +25,10 @@ function WishlistProvider({ children }) {
     }
   };
 
+  // REMOVE FROM WISHLIST
+
   const removeFromWishlist = (id) => {
+
     setWishlistItems(
       wishlistItems.filter(
         (item) => item.id !== id
@@ -29,6 +37,7 @@ function WishlistProvider({ children }) {
   };
 
   return (
+
     <WishlistContext.Provider
       value={{
         wishlistItems,

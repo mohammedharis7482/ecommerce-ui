@@ -1,225 +1,401 @@
 import { useContext } from "react";
 
+import {
+  FaTrash,
+  FaMinus,
+  FaPlus,
+} from "react-icons/fa";
+
 import { CartContext } from "../context/CartContext";
 
 import Footer from "../components/Footer";
-
-import {
-  FaTrash,
-  FaPlus,
-  FaMinus,
-} from "react-icons/fa";
 
 function Cart() {
 
   const {
     cartItems,
+
     removeFromCart,
+
     increaseQuantity,
+
     decreaseQuantity,
+
+    subtotal,
   } = useContext(CartContext);
-
-  // SUBTOTAL
-
-  const subtotal = cartItems.reduce(
-
-    (total, item) =>
-
-      total + item.price * item.quantity,
-
-    0
-  );
 
   return (
 
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-[#f8f8f8] min-h-screen pt-32">
 
-      {/* HERO */}
+      {/* HEADER */}
 
-      <section className="bg-black text-white py-32 text-center">
-
-        <h1 className="text-6xl font-bold mb-6">
-
-          Shopping Cart
-
-        </h1>
-
-        <p className="text-gray-300 text-xl">
-
-          Review your selected products.
-
+      <div
+        className="
+        max-w-7xl
+        mx-auto
+        px-6
+        mb-16
+        "
+      >
+        <p
+          className="
+          uppercase
+          tracking-[5px]
+          text-gray-400
+          mb-4
+          "
+        >
+          Your Shopping Cart
         </p>
 
-      </section>
+        <h1
+          className="
+          text-6xl
+          font-black
+          text-black
+          "
+        >
+          Cart Overview
+        </h1>
+      </div>
 
-      {/* CART CONTENT */}
+      {/* EMPTY CART */}
 
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      {cartItems.length === 0 ? (
 
-        {cartItems.length === 0 ? (
+        <div
+          className="
+          flex
+          items-center
+          justify-center
+          py-32
+          "
+        >
+          <h2
+            className="
+            text-3xl
+            font-bold
+            text-gray-400
+            "
+          >
+            Your cart is empty
+          </h2>
+        </div>
 
-          <div className="bg-white rounded-[30px] p-20 text-center shadow-md">
+      ) : (
 
-            <h2 className="text-4xl font-bold mb-6">
+        <div
+          className="
+          max-w-7xl
+          mx-auto
+          px-6
+          grid
+          lg:grid-cols-3
+          gap-10
+          pb-24
+          "
+        >
+          {/* CART ITEMS */}
 
-              Cart is Empty
+          <div className="lg:col-span-2 space-y-6">
 
-            </h2>
+            {cartItems.map((item) => (
 
-            <p className="text-gray-500 text-lg">
+              <div
+                key={item.id}
+                className="
+                bg-white
+                rounded-[30px]
+                p-6
+                flex
+                flex-col
+                md:flex-row
+                gap-6
+                items-center
+                border
+                border-gray-100
+                shadow-sm
+                "
+              >
+                {/* IMAGE */}
 
-              Add products to your shopping cart.
+                <img
+                  loading="lazy"
+                  src={item.images[0]}
+                  alt={item.name}
+                  className="
+                  w-full
+                  md:w-[180px]
+                  h-[220px]
+                  object-cover
+                  rounded-2xl
+                  "
+                />
 
-            </p>
+                {/* CONTENT */}
 
-          </div>
+                <div className="flex-1 w-full">
 
-        ) : (
+                  {/* CATEGORY */}
 
-          <div className="grid lg:grid-cols-3 gap-10">
+                  <p
+                    className="
+                    uppercase
+                    tracking-[3px]
+                    text-gray-400
+                    text-xs
+                    mb-3
+                    "
+                  >
+                    {item.category}
+                  </p>
 
-            {/* LEFT */}
+                  {/* TITLE */}
 
-            <div className="lg:col-span-2 space-y-6">
+                  <h2
+                    className="
+                    text-3xl
+                    font-bold
+                    mb-4
+                    "
+                  >
+                    {item.name}
+                  </h2>
 
-              {cartItems.map((item) => (
+                  {/* PRICE */}
 
-                <div
-                  key={item.id}
-                  className="bg-white rounded-[30px] p-6 flex gap-6 items-center shadow-lg hover:shadow-2xl transition"
-                >
+                  <p
+                    className="
+                    text-2xl
+                    font-black
+                    mb-6
+                    "
+                  >
+                    ${item.price}
+                  </p>
 
-                  {/* IMAGE */}
+                  {/* QUANTITY */}
 
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-36 h-36 object-cover rounded-2xl"
-                  />
+                  <div
+                    className="
+                    flex
+                    items-center
+                    gap-4
+                    "
+                  >
+                    {/* MINUS */}
 
-                  {/* INFO */}
-
-                  <div className="flex-1">
-
-                    <h2 className="text-3xl font-bold mb-3">
-
-                      {item.name}
-
-                    </h2>
-
-                    <p className="text-gray-500 mb-6">
-
-                      ${item.price}
-
-                    </p>
+                    <button
+                      onClick={() =>
+                        decreaseQuantity(
+                          item.id
+                        )
+                      }
+                      className="
+                      w-10
+                      h-10
+                      rounded-full
+                      bg-gray-100
+                      flex
+                      items-center
+                      justify-center
+                      hover:bg-black
+                      hover:text-white
+                      transition
+                      "
+                    >
+                      <FaMinus />
+                    </button>
 
                     {/* QUANTITY */}
 
-                    <div className="flex items-center gap-4">
+                    <span
+                      className="
+                      text-xl
+                      font-bold
+                      "
+                    >
+                      {item.quantity}
+                    </span>
 
-                      <button
-                        onClick={() =>
-                          decreaseQuantity(item.id)
-                        }
-                        className="bg-gray-200 p-3 rounded-xl hover:bg-gray-300 transition"
-                      >
+                    {/* PLUS */}
 
-                        <FaMinus />
-
-                      </button>
-
-                      <span className="text-xl font-bold">
-
-                        {item.quantity}
-
-                      </span>
-
-                      <button
-                        onClick={() =>
-                          increaseQuantity(item.id)
-                        }
-                        className="bg-gray-200 p-3 rounded-xl hover:bg-gray-300 transition"
-                      >
-
-                        <FaPlus />
-
-                      </button>
-
-                    </div>
-
+                    <button
+                      onClick={() =>
+                        increaseQuantity(
+                          item.id
+                        )
+                      }
+                      className="
+                      w-10
+                      h-10
+                      rounded-full
+                      bg-gray-100
+                      flex
+                      items-center
+                      justify-center
+                      hover:bg-black
+                      hover:text-white
+                      transition
+                      "
+                    >
+                      <FaPlus />
+                    </button>
                   </div>
-
-                  {/* REMOVE */}
-
-                  <button
-                    onClick={() =>
-                      removeFromCart(item.id)
-                    }
-                    className="text-red-500 text-2xl hover:scale-110 transition"
-                  >
-
-                    <FaTrash />
-
-                  </button>
-
-                </div>
-              ))}
-
-            </div>
-
-            {/* RIGHT */}
-
-            <div className="bg-white rounded-[30px] p-10 shadow-lg h-fit sticky top-32">
-
-              <h2 className="text-4xl font-bold mb-10">
-
-                Order Summary
-
-              </h2>
-
-              <div className="space-y-6 mb-10">
-
-                <div className="flex justify-between text-lg">
-
-                  <span>Subtotal</span>
-
-                  <span>${subtotal}</span>
-
                 </div>
 
-                <div className="flex justify-between text-lg">
+                {/* REMOVE */}
 
-                  <span>Shipping</span>
-
-                  <span>Free</span>
-
-                </div>
-
-                <div className="border-t pt-6 flex justify-between text-2xl font-bold">
-
-                  <span>Total</span>
-
-                  <span>${subtotal}</span>
-
-                </div>
-
+                <button
+                  onClick={() =>
+                    removeFromCart(item.id)
+                  }
+                  className="
+                  w-14
+                  h-14
+                  rounded-full
+                  bg-red-50
+                  text-red-500
+                  flex
+                  items-center
+                  justify-center
+                  hover:bg-red-500
+                  hover:text-white
+                  transition
+                  "
+                >
+                  <FaTrash />
+                </button>
               </div>
 
-              <button className="w-full bg-black text-white py-5 rounded-2xl text-lg font-semibold hover:bg-gray-800 transition">
-
-                Proceed To Checkout
-
-              </button>
-
-            </div>
-
+            ))}
           </div>
 
-        )}
+          {/* SUMMARY */}
 
-      </section>
+          <div
+            className="
+            bg-white
+            rounded-[30px]
+            p-8
+            h-fit
+            border
+            border-gray-100
+            shadow-sm
+            sticky
+            top-32
+            "
+          >
+            <h2
+              className="
+              text-3xl
+              font-black
+              mb-8
+              "
+            >
+              Order Summary
+            </h2>
 
-      {/* FOOTER */}
+            {/* SUBTOTAL */}
+
+            <div
+              className="
+              flex
+              items-center
+              justify-between
+              mb-5
+              "
+            >
+              <span className="text-gray-500">
+
+                Subtotal
+
+              </span>
+
+              <span
+                className="
+                font-bold
+                text-xl
+                "
+              >
+                ${subtotal}
+              </span>
+            </div>
+
+            {/* SHIPPING */}
+
+            <div
+              className="
+              flex
+              items-center
+              justify-between
+              mb-8
+              "
+            >
+              <span className="text-gray-500">
+
+                Shipping
+
+              </span>
+
+              <span className="font-bold">
+
+                Free
+
+              </span>
+            </div>
+
+            {/* TOTAL */}
+
+            <div
+              className="
+              flex
+              items-center
+              justify-between
+              border-t
+              pt-6
+              mb-10
+              "
+            >
+              <span
+                className="
+                text-2xl
+                font-black
+                "
+              >
+                Total
+              </span>
+
+              <span
+                className="
+                text-3xl
+                font-black
+                "
+              >
+                ${subtotal}
+              </span>
+            </div>
+
+            {/* BUTTON */}
+
+            <button
+              className="
+              w-full
+              bg-black
+              text-white
+              py-5
+              rounded-2xl
+              font-semibold
+              hover:scale-[1.02]
+              transition
+              "
+            >
+              Proceed To Checkout
+            </button>
+          </div>
+        </div>
+      )}
 
       <Footer />
 
