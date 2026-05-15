@@ -1,6 +1,7 @@
 import {
   createContext,
   useState,
+  useEffect,
 } from "react";
 
 export const CartContext =
@@ -8,8 +9,29 @@ export const CartContext =
 
 function CartProvider({ children }) {
 
+  // LOAD CART FROM LOCAL STORAGE
+
   const [cartItems, setCartItems] =
-    useState([]);
+    useState(() => {
+
+      const savedCart =
+        localStorage.getItem("cart");
+
+      return savedCart
+        ? JSON.parse(savedCart)
+        : [];
+    });
+
+  // SAVE CART TO LOCAL STORAGE
+
+  useEffect(() => {
+
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(cartItems)
+    );
+
+  }, [cartItems]);
 
   // ADD TO CART
 
@@ -20,8 +42,6 @@ function CartProvider({ children }) {
         (item) =>
           item.id === product.id
       );
-
-    // IF PRODUCT EXISTS
 
     if (existingItem) {
 
@@ -56,7 +76,7 @@ function CartProvider({ children }) {
     }
   };
 
-  // REMOVE ITEM
+  // REMOVE
 
   const removeFromCart = (id) => {
 
@@ -68,7 +88,7 @@ function CartProvider({ children }) {
     );
   };
 
-  // INCREASE QUANTITY
+  // INCREASE
 
   const increaseQuantity = (id) => {
 
@@ -90,7 +110,7 @@ function CartProvider({ children }) {
     );
   };
 
-  // DECREASE QUANTITY
+  // DECREASE
 
   const decreaseQuantity = (id) => {
 

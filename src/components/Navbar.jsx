@@ -1,18 +1,24 @@
 import { Link, useLocation } from "react-router-dom";
 
-import { useContext } from "react";
-
-import { CartContext } from "../context/CartContext";
-import { WishlistContext } from "../context/WishlistContext";
+import { useContext, useState } from "react";
 
 import {
   FaShoppingCart,
   FaHeart,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
+
+import { CartContext } from "../context/CartContext";
+
+import { WishlistContext } from "../context/WishlistContext";
 
 function Navbar() {
 
   const location = useLocation();
+
+  const [menuOpen, setMenuOpen] =
+    useState(false);
 
   const { cartItems } =
     useContext(CartContext);
@@ -52,9 +58,9 @@ function Navbar() {
       w-full
       z-50
       bg-white/90
-      backdrop-blur-lg
+      backdrop-blur-xl
       border-b
-      border-gray-200
+      border-gray-200/70
       shadow-sm
       "
     >
@@ -62,9 +68,10 @@ function Navbar() {
         className="
         max-w-7xl
         mx-auto
-        px-5
+        px-4
+        sm:px-6
         lg:px-8
-        py-5
+        py-4
         flex
         items-center
         justify-between
@@ -76,7 +83,8 @@ function Navbar() {
 
           <h1
             className="
-            text-4xl
+            text-2xl
+            sm:text-3xl
             font-black
             tracking-tight
             text-black
@@ -87,7 +95,7 @@ function Navbar() {
 
         </Link>
 
-        {/* NAV LINKS */}
+        {/* DESKTOP NAV */}
 
         <nav
           className="
@@ -104,13 +112,14 @@ function Navbar() {
               to={link.path}
               className={`
                 relative
-                text-[16px]
+                text-[15px]
                 font-semibold
-                transition
+                transition-all
                 duration-300
-                
+
                 ${
-                  location.pathname === link.path
+                  location.pathname ===
+                  link.path
                     ? "text-black"
                     : "text-gray-500 hover:text-black"
                 }
@@ -118,9 +127,8 @@ function Navbar() {
             >
               {link.name}
 
-              {/* ACTIVE LINE */}
-
-              {location.pathname === link.path && (
+              {location.pathname ===
+                link.path && (
 
                 <span
                   className="
@@ -135,19 +143,19 @@ function Navbar() {
                 />
 
               )}
-
             </Link>
 
           ))}
         </nav>
 
-        {/* RIGHT ICONS */}
+        {/* RIGHT */}
 
         <div
           className="
           flex
           items-center
-          gap-6
+          gap-3
+          sm:gap-5
           "
         >
           {/* WISHLIST */}
@@ -156,7 +164,8 @@ function Navbar() {
             to="/wishlist"
             className="
             relative
-            text-2xl
+            text-xl
+            sm:text-2xl
             text-gray-700
             hover:text-black
             transition
@@ -170,17 +179,18 @@ function Navbar() {
                 className="
                 absolute
                 -top-2
-                -right-3
+                -right-2
                 bg-red-500
                 text-white
-                text-[11px]
+                text-[10px]
                 font-bold
-                w-5
-                h-5
+                min-w-[18px]
+                h-[18px]
                 rounded-full
                 flex
                 items-center
                 justify-center
+                px-1
                 "
               >
                 {wishlistItems.length}
@@ -195,7 +205,8 @@ function Navbar() {
             to="/cart"
             className="
             relative
-            text-2xl
+            text-xl
+            sm:text-2xl
             text-gray-700
             hover:text-black
             transition
@@ -209,17 +220,18 @@ function Navbar() {
                 className="
                 absolute
                 -top-2
-                -right-3
+                -right-2
                 bg-black
                 text-white
-                text-[11px]
+                text-[10px]
                 font-bold
-                w-5
-                h-5
+                min-w-[18px]
+                h-[18px]
                 rounded-full
                 flex
                 items-center
                 justify-center
+                px-1
                 "
               >
                 {cartItems.length}
@@ -227,6 +239,85 @@ function Navbar() {
 
             )}
           </Link>
+
+          {/* MOBILE MENU BUTTON */}
+
+          <button
+            onClick={() =>
+              setMenuOpen(!menuOpen)
+            }
+            className="
+            md:hidden
+            w-11
+            h-11
+            rounded-full
+            bg-gray-100
+            flex
+            items-center
+            justify-center
+            text-lg
+            "
+          >
+            {menuOpen ? (
+              <FaTimes />
+            ) : (
+              <FaBars />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* MOBILE MENU */}
+
+      <div
+        className={`
+          md:hidden
+          overflow-hidden
+          transition-all
+          duration-500
+          bg-white
+
+          ${
+            menuOpen
+              ? "max-h-[400px] border-t border-gray-100"
+              : "max-h-0"
+          }
+        `}
+      >
+        <div
+          className="
+          px-6
+          py-6
+          flex
+          flex-col
+          gap-6
+          "
+        >
+          {navLinks.map((link) => (
+
+            <Link
+              key={link.path}
+              to={link.path}
+              onClick={() =>
+                setMenuOpen(false)
+              }
+              className={`
+                text-lg
+                font-semibold
+                transition
+
+                ${
+                  location.pathname ===
+                  link.path
+                    ? "text-black"
+                    : "text-gray-500"
+                }
+              `}
+            >
+              {link.name}
+            </Link>
+
+          ))}
         </div>
       </div>
     </header>

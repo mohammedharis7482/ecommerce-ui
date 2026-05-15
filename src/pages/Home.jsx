@@ -1,355 +1,317 @@
-import PageWrapper from "../components/animations/PageWrapper";
 import { Link } from "react-router-dom";
 
 import {
-  FaTruck,
+  FaArrowRight,
+  FaShippingFast,
   FaShieldAlt,
-  FaStar,
-  FaHeadphones,
+  FaUndo,
 } from "react-icons/fa";
 
-import products from "../data/products";
-
-import ProductCard from "../components/ProductCard";
+import Navbar from "../components/Navbar";
 
 import Footer from "../components/Footer";
 
+import ProductCard from "../components/ProductCard";
+
+import products from "../data/products";
+
 function Home() {
 
+  const featuredProducts =
+    products.slice(0, 4);
+
+  const bestSellers =
+    products.slice(4, 8);
+
   return (
-    <PageWrapper>
 
-    <div className="bg-[#f5f5f5] overflow-hidden">
+    <div className="bg-[#f7f7f7] overflow-hidden">
 
-      {/* HERO SECTION */}
+      <Navbar />
+
+      {/* HERO */}
 
       <section
         className="
-        relative
-        min-h-screen
-        bg-black
-        text-white
-        flex
-        items-center
+        pt-28
+        sm:pt-32
+        lg:pt-36
+        pb-20
+        sm:pb-24
+        px-4
+        sm:px-6
         "
       >
-        {/* GLOW EFFECTS */}
-
         <div
           className="
-          absolute
-          top-[-200px]
-          right-[-200px]
-          w-[500px]
-          h-[500px]
-          bg-white/10
-          rounded-full
-          blur-3xl
-          "
-        />
-
-        <div
-          className="
-          absolute
-          bottom-[-150px]
-          left-[-150px]
-          w-[400px]
-          h-[400px]
-          bg-white/5
-          rounded-full
-          blur-3xl
-          "
-        />
-
-        {/* CONTENT */}
-
-        <div
-          className="
-          relative
-          z-10
           max-w-7xl
           mx-auto
-          px-6
-          py-32
           grid
           lg:grid-cols-2
-          gap-20
+          gap-14
+          lg:gap-20
           items-center
           "
         >
           {/* LEFT */}
 
-          <div>
-
-            <div
+          <div
+            className="
+            order-2
+            lg:order-1
+            "
+          >
+            <p
               className="
-              inline-flex
-              items-center
-              gap-3
-              bg-white/10
-              border
-              border-white/10
-              px-5
-              py-2
-              rounded-full
-              mb-8
-              backdrop-blur-md
+              uppercase
+              tracking-[4px]
+              text-gray-400
+              mb-5
+              text-xs
+              sm:text-sm
               "
             >
-              <span className="w-2 h-2 bg-green-400 rounded-full" />
-
-              <p
-                className="
-                text-sm
-                tracking-[3px]
-                uppercase
-                text-gray-300
-                "
-              >
-                Luxury Fashion Collection
-              </p>
-            </div>
+              Modern Luxury Fashion
+            </p>
 
             <h1
               className="
-              text-6xl
-              md:text-8xl
+              text-5xl
+              sm:text-6xl
+              lg:text-8xl
               font-black
               leading-[0.95]
+              text-black
               mb-8
               "
             >
-              Wear
+              Discover
               <br />
-
-              <span className="text-gray-400">
-
-                The Future
-
-              </span>
-
+              Premium
               <br />
-
-              Of Fashion
+              Fashion.
             </h1>
 
             <p
               className="
-              text-lg
-              md:text-xl
-              text-gray-300
+              text-base
+              sm:text-lg
+              text-gray-600
               leading-relaxed
               max-w-xl
-              mb-12
+              mb-10
               "
             >
-              Premium fashion collections crafted
-              for modern lifestyles, luxury aesthetics,
-              and timeless minimal experiences.
+              Explore luxury streetwear,
+              premium essentials, and
+              modern fashion collections
+              designed for the next
+              generation lifestyle.
             </p>
 
-            <div className="flex flex-wrap gap-5">
+            {/* BUTTONS */}
 
-              <Link to="/products">
-
-                <button
-                  className="
-                  bg-white
-                  text-black
-                  px-8
-                  py-4
-                  rounded-full
-                  font-semibold
-                  hover:scale-105
-                  transition
-                  "
-                >
-                  Shop Collection
-                </button>
-
-              </Link>
-
-              <button
+            <div
+              className="
+              flex
+              flex-col
+              sm:flex-row
+              gap-4
+              "
+            >
+              <Link
+                to="/products"
                 className="
-                border
-                border-white/20
-                bg-white/5
-                backdrop-blur-md
+                bg-black
+                hover:bg-gray-900
+                text-white
                 px-8
                 py-4
                 rounded-full
                 font-semibold
-                hover:bg-white
-                hover:text-black
-                transition
+                flex
+                items-center
+                justify-center
+                gap-3
+                transition-all
+                duration-300
+                hover:scale-105
                 "
               >
-                Explore Brands
+                Shop Now
+
+                <FaArrowRight />
+              </Link>
+
+              <button
+                className="
+                bg-white
+                border
+                border-gray-200
+                px-8
+                py-4
+                rounded-full
+                font-semibold
+                hover:border-black
+                transition-all
+                duration-300
+                "
+              >
+                Explore Collections
               </button>
             </div>
           </div>
 
-          {/* RIGHT IMAGE */}
+          {/* RIGHT */}
 
           <div
             className="
-            hidden
-            lg:flex
-            justify-center
             relative
+            order-1
+            lg:order-2
             "
           >
             <div
               className="
-              relative
-              w-[500px]
-              h-[650px]
-              rounded-[40px]
+              rounded-[32px]
+              sm:rounded-[40px]
               overflow-hidden
               shadow-2xl
               "
             >
               <img
-                src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b"
-                alt="Fashion"
+                src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1400&auto=format&fit=crop"
+                alt="Hero"
                 className="
                 w-full
-                h-full
+                h-[500px]
+                sm:h-[650px]
+                lg:h-[780px]
                 object-cover
                 "
               />
+            </div>
 
-              <div
+            {/* FLOATING CARD */}
+
+            <div
+              className="
+              absolute
+              bottom-5
+              left-5
+              sm:bottom-8
+              sm:left-8
+              bg-white/90
+              backdrop-blur-md
+              p-5
+              sm:p-6
+              rounded-3xl
+              shadow-xl
+              "
+            >
+              <p
                 className="
-                absolute
-                inset-0
-                bg-gradient-to-t
-                from-black/40
-                to-transparent
+                text-xs
+                sm:text-sm
+                text-gray-400
+                mb-2
                 "
-              />
+              >
+                Trending Collection
+              </p>
+
+              <h3
+                className="
+                text-xl
+                sm:text-2xl
+                font-black
+                "
+              >
+                Urban Luxury
+              </h3>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TRUST SECTION */}
+      {/* FEATURES */}
 
       <section
         className="
-        max-w-7xl
-        mx-auto
-        px-6
-        py-20
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-4
-        gap-8
+        px-4
+        sm:px-6
+        pb-20
+        sm:pb-24
         "
       >
-        {/* CARD */}
-
         <div
           className="
-          bg-white
-          p-8
-          rounded-3xl
-          shadow-sm
-          text-center
+          max-w-7xl
+          mx-auto
+          grid
+          grid-cols-1
+          md:grid-cols-3
+          gap-6
           "
         >
-          <FaTruck className="text-4xl mx-auto mb-5" />
+          {[
+            {
+              icon: <FaShippingFast />,
+              title: "Free Shipping",
+              text: "Free worldwide delivery for all premium collections.",
+            },
 
-          <h3 className="text-2xl font-bold mb-3">
+            {
+              icon: <FaUndo />,
+              title: "Easy Returns",
+              text: "30-day hassle free return policy for every order.",
+            },
 
-            Free Shipping
+            {
+              icon: <FaShieldAlt />,
+              title: "Secure Payment",
+              text: "Protected payments with premium checkout security.",
+            },
+          ].map((feature, index) => (
 
-          </h3>
+            <div
+              key={index}
+              className="
+              bg-white
+              rounded-[30px]
+              p-8
+              border
+              border-gray-100
+              hover:shadow-xl
+              transition-all
+              duration-300
+              "
+            >
+              <div
+                className="
+                text-3xl
+                mb-5
+                "
+              >
+                {feature.icon}
+              </div>
 
-          <p className="text-gray-500">
+              <h3
+                className="
+                text-2xl
+                font-bold
+                mb-3
+                "
+              >
+                {feature.title}
+              </h3>
 
-            Fast premium worldwide delivery.
+              <p className="text-gray-500 leading-relaxed">
+                {feature.text}
+              </p>
+            </div>
 
-          </p>
-        </div>
-
-        {/* CARD */}
-
-        <div
-          className="
-          bg-white
-          p-8
-          rounded-3xl
-          shadow-sm
-          text-center
-          "
-        >
-          <FaShieldAlt className="text-4xl mx-auto mb-5" />
-
-          <h3 className="text-2xl font-bold mb-3">
-
-            Secure Payment
-
-          </h3>
-
-          <p className="text-gray-500">
-
-            Trusted encrypted transactions.
-
-          </p>
-        </div>
-
-        {/* CARD */}
-
-        <div
-          className="
-          bg-white
-          p-8
-          rounded-3xl
-          shadow-sm
-          text-center
-          "
-        >
-          <FaStar className="text-4xl mx-auto mb-5" />
-
-          <h3 className="text-2xl font-bold mb-3">
-
-            Premium Quality
-
-          </h3>
-
-          <p className="text-gray-500">
-
-            Luxury crafted fashion products.
-
-          </p>
-        </div>
-
-        {/* CARD */}
-
-        <div
-          className="
-          bg-white
-          p-8
-          rounded-3xl
-          shadow-sm
-          text-center
-          "
-        >
-          <FaHeadphones className="text-4xl mx-auto mb-5" />
-
-          <h3 className="text-2xl font-bold mb-3">
-
-            24/7 Support
-
-          </h3>
-
-          <p className="text-gray-500">
-
-            Dedicated customer assistance.
-
-          </p>
+          ))}
         </div>
       </section>
 
@@ -357,228 +319,250 @@ function Home() {
 
       <section
         className="
-        max-w-7xl
-        mx-auto
-        px-6
-        py-24
+        px-4
+        sm:px-6
+        pb-24
         "
       >
-        <div className="mb-16">
+        <div className="max-w-7xl mx-auto">
 
-          <p
+          {/* HEADER */}
+
+          <div
             className="
-            uppercase
-            tracking-[4px]
-            text-gray-400
-            mb-4
+            flex
+            flex-col
+            md:flex-row
+            md:items-end
+            md:justify-between
+            gap-5
+            mb-14
             "
           >
-            Featured Collection
-          </p>
+            <div>
 
-          <h2
+              <p
+                className="
+                uppercase
+                tracking-[4px]
+                text-gray-400
+                text-xs
+                sm:text-sm
+                mb-4
+                "
+              >
+                Featured Collection
+              </p>
+
+              <h2
+                className="
+                text-4xl
+                sm:text-5xl
+                font-black
+                "
+              >
+                New Arrivals
+              </h2>
+            </div>
+
+            <Link
+              to="/products"
+              className="
+              flex
+              items-center
+              gap-3
+              font-semibold
+              "
+            >
+              View All
+
+              <FaArrowRight />
+            </Link>
+          </div>
+
+          {/* GRID */}
+
+          <div
             className="
-            text-5xl
-            font-black
-            mb-6
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            lg:grid-cols-4
+            gap-6
+            sm:gap-8
             "
           >
-            Trending Products
-          </h2>
+            {featuredProducts.map(
+              (product) => (
 
-          <p
-            className="
-            text-gray-500
-            text-lg
-            max-w-2xl
-            "
-          >
-            Explore premium fashion collections
-            designed for modern aesthetics.
-          </p>
-        </div>
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                />
 
-        {/* PRODUCTS */}
-
-        <div
-          className="
-          grid
-          grid-cols-1
-          sm:grid-cols-2
-          lg:grid-cols-3
-          xl:grid-cols-4
-          gap-8
-          "
-        >
-          {products.map((product) => (
-
-            <ProductCard
-              key={product.id}
-              product={product}
-            />
-
-          ))}
+              )
+            )}
+          </div>
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
+      {/* BANNER */}
 
       <section
         className="
-        bg-black
-        text-white
-        py-28
+        px-4
+        sm:px-6
+        pb-24
         "
       >
         <div
           className="
           max-w-7xl
           mx-auto
-          px-6
+          rounded-[32px]
+          sm:rounded-[40px]
+          overflow-hidden
+          relative
           "
         >
-          {/* HEADER */}
+          <img
+            src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1600&auto=format&fit=crop"
+            alt="Collection"
+            className="
+            w-full
+            h-[500px]
+            sm:h-[650px]
+            object-cover
+            "
+          />
 
-          <div className="text-center mb-20">
+          <div
+            className="
+            absolute
+            inset-0
+            bg-black/45
+            flex
+            items-center
+            "
+          >
+            <div
+              className="
+              p-6
+              sm:p-12
+              lg:p-20
+              "
+            >
+              <p
+                className="
+                uppercase
+                tracking-[4px]
+                text-white/70
+                text-xs
+                sm:text-sm
+                mb-5
+                "
+              >
+                Exclusive Collection
+              </p>
+
+              <h2
+                className="
+                text-4xl
+                sm:text-6xl
+                lg:text-7xl
+                font-black
+                text-white
+                leading-tight
+                mb-8
+                "
+              >
+                Minimal
+                <br />
+                Luxury
+              </h2>
+
+              <Link
+                to="/products"
+                className="
+                inline-flex
+                items-center
+                gap-3
+                bg-white
+                text-black
+                px-8
+                py-4
+                rounded-full
+                font-semibold
+                hover:bg-gray-200
+                transition
+                "
+              >
+                Shop Collection
+
+                <FaArrowRight />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BEST SELLERS */}
+
+      <section
+        className="
+        px-4
+        sm:px-6
+        pb-24
+        "
+      >
+        <div className="max-w-7xl mx-auto">
+
+          <div className="mb-14">
 
             <p
               className="
               uppercase
               tracking-[4px]
               text-gray-400
+              text-xs
+              sm:text-sm
               mb-4
               "
             >
-              Testimonials
+              Best Selling Products
             </p>
 
             <h2
               className="
-              text-5xl
+              text-4xl
+              sm:text-5xl
               font-black
               "
             >
-              What Customers Say
+              Most Popular
             </h2>
           </div>
-
-          {/* TESTIMONIAL GRID */}
 
           <div
             className="
             grid
-            md:grid-cols-3
-            gap-8
+            grid-cols-1
+            sm:grid-cols-2
+            lg:grid-cols-4
+            gap-6
+            sm:gap-8
             "
           >
-            {/* CARD */}
+            {bestSellers.map(
+              (product) => (
 
-            <div
-              className="
-              bg-white/10
-              backdrop-blur-xl
-              border
-              border-white/10
-              p-8
-              rounded-3xl
-              "
-            >
-              <p
-                className="
-                text-gray-300
-                leading-relaxed
-                mb-8
-                "
-              >
-                “Absolutely premium experience.
-                The UI, products, and delivery quality
-                are top level.”
-              </p>
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                />
 
-              <h3 className="text-2xl font-bold">
-
-                Sarah Johnson
-
-              </h3>
-
-              <p className="text-gray-400">
-
-                Fashion Creator
-
-              </p>
-            </div>
-
-            {/* CARD */}
-
-            <div
-              className="
-              bg-white/10
-              backdrop-blur-xl
-              border
-              border-white/10
-              p-8
-              rounded-3xl
-              "
-            >
-              <p
-                className="
-                text-gray-300
-                leading-relaxed
-                mb-8
-                "
-              >
-                “The best modern ecommerce shopping
-                experience I’ve seen recently.”
-              </p>
-
-              <h3 className="text-2xl font-bold">
-
-                Michael Lee
-
-              </h3>
-
-              <p className="text-gray-400">
-
-                UI/UX Designer
-
-              </p>
-            </div>
-
-            {/* CARD */}
-
-            <div
-              className="
-              bg-white/10
-              backdrop-blur-xl
-              border
-              border-white/10
-              p-8
-              rounded-3xl
-              "
-            >
-              <p
-                className="
-                text-gray-300
-                leading-relaxed
-                mb-8
-                "
-              >
-                “Luxury aesthetics with smooth shopping
-                interactions. Amazing frontend work.”
-              </p>
-
-              <h3 className="text-2xl font-bold">
-
-                Emma Wilson
-
-              </h3>
-
-              <p className="text-gray-400">
-
-                Brand Manager
-
-              </p>
-            </div>
+              )
+            )}
           </div>
         </div>
       </section>
@@ -587,126 +571,111 @@ function Home() {
 
       <section
         className="
-        max-w-5xl
-        mx-auto
-        px-6
-        py-28
+        px-4
+        sm:px-6
+        pb-24
         "
       >
         <div
           className="
+          max-w-5xl
+          mx-auto
           bg-black
-          text-white
-          rounded-[40px]
-          p-14
+          rounded-[32px]
+          sm:rounded-[40px]
+          p-8
+          sm:p-14
+          lg:p-20
           text-center
-          relative
-          overflow-hidden
           "
         >
-          {/* GLOW */}
+          <p
+            className="
+            uppercase
+            tracking-[4px]
+            text-white/50
+            text-xs
+            sm:text-sm
+            mb-5
+            "
+          >
+            Stay Updated
+          </p>
+
+          <h2
+            className="
+            text-4xl
+            sm:text-5xl
+            lg:text-6xl
+            font-black
+            text-white
+            leading-tight
+            mb-8
+            "
+          >
+            Join Our
+            <br />
+            Premium Newsletter
+          </h2>
+
+          <p
+            className="
+            text-white/70
+            text-base
+            sm:text-lg
+            max-w-2xl
+            mx-auto
+            mb-10
+            leading-relaxed
+            "
+          >
+            Get updates about premium
+            drops, exclusive collections,
+            and modern fashion trends.
+          </p>
 
           <div
             className="
-            absolute
-            top-[-100px]
-            right-[-100px]
-            w-[300px]
-            h-[300px]
-            bg-white/10
-            rounded-full
-            blur-3xl
+            flex
+            flex-col
+            sm:flex-row
+            gap-4
+            max-w-2xl
+            mx-auto
             "
-          />
-
-          {/* CONTENT */}
-
-          <div className="relative z-10">
-
-            <p
+          >
+            <input
+              type="email"
+              placeholder="Enter your email"
               className="
-              uppercase
-              tracking-[4px]
-              text-gray-400
-              mb-5
+              flex-1
+              px-6
+              py-5
+              rounded-full
+              outline-none
+              "
+            />
+
+            <button
+              className="
+              bg-white
+              text-black
+              px-8
+              py-5
+              rounded-full
+              font-semibold
+              hover:bg-gray-200
+              transition
               "
             >
-              Newsletter
-            </p>
-
-            <h2
-              className="
-              text-5xl
-              font-black
-              mb-6
-              "
-            >
-              Stay Updated
-            </h2>
-
-            <p
-              className="
-              text-gray-300
-              text-lg
-              max-w-2xl
-              mx-auto
-              mb-10
-              "
-            >
-              Subscribe to receive exclusive offers,
-              premium collections, and latest fashion
-              updates.
-            </p>
-
-            {/* INPUT */}
-
-            <div
-              className="
-              flex
-              flex-col
-              sm:flex-row
-              gap-4
-              justify-center
-              "
-            >
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="
-                px-6
-                py-4
-                rounded-full
-                text-black
-                outline-none
-                w-full
-                sm:w-[400px]
-                "
-              />
-
-              <button
-                className="
-                bg-white
-                text-black
-                px-8
-                py-4
-                rounded-full
-                font-semibold
-                hover:scale-105
-                transition
-                "
-              >
-                Subscribe
-              </button>
-            </div>
+              Subscribe
+            </button>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-
       <Footer />
     </div>
-    </PageWrapper>
   );
 }
 

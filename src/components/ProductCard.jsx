@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -18,26 +18,19 @@ function ProductCard({ product }) {
     useContext(CartContext);
 
   const {
-    wishlistItems,
+    wishlistItems = [],
     addToWishlist,
     removeFromWishlist,
-  } = useContext(WishlistContext);
-
-  // HOVER IMAGE
-
-  const [hovered, setHovered] =
-    useState(false);
-
-  const image =
-    hovered && product.images[1]
-      ? product.images[1]
-      : product.images[0];
+  } = useContext(
+    WishlistContext
+  );
 
   // WISHLIST CHECK
 
   const isWishlisted =
     wishlistItems.some(
-      (item) => item.id === product.id
+      (item) =>
+        item.id === product.id
     );
 
   // TOGGLE WISHLIST
@@ -46,7 +39,9 @@ function ProductCard({ product }) {
 
     if (isWishlisted) {
 
-      removeFromWishlist(product.id);
+      removeFromWishlist(
+        product.id
+      );
 
     } else {
 
@@ -57,21 +52,15 @@ function ProductCard({ product }) {
   return (
 
     <div
-      onMouseEnter={() =>
-        setHovered(true)
-      }
-      onMouseLeave={() =>
-        setHovered(false)
-      }
       className="
       group
       bg-white
-      rounded-[30px]
+      rounded-[28px]
       overflow-hidden
       border
       border-gray-100
       hover:border-gray-200
-      hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)]
+      hover:shadow-2xl
       transition-all
       duration-500
       flex
@@ -81,28 +70,51 @@ function ProductCard({ product }) {
     >
       {/* IMAGE SECTION */}
 
-      <div className="relative overflow-hidden">
+      <div
+        className="
+        relative
+        bg-[#f6f6f6]
+        overflow-hidden
+        p-5
+        sm:p-7
+        md:p-8
+        flex
+        items-center
+        justify-center
+        h-[260px]
+        sm:h-[320px]
+        md:h-[360px]
+        "
+      >
+        {/* CATEGORY */}
 
-        {/* PRODUCT LINK */}
-
-        <Link to={`/product/${product.id}`}>
-
-          <img
-            loading="lazy"
-            src={image}
-            alt={product.name}
+        <div
+          className="
+          absolute
+          top-4
+          left-4
+          z-10
+          "
+        >
+          <span
             className="
-            w-full
-            h-[360px]
-            object-cover
-            transition-all
-            duration-700
-            group-hover:scale-105
-            cursor-pointer
+            bg-white/90
+            backdrop-blur-md
+            text-[10px]
+            sm:text-xs
+            uppercase
+            tracking-[3px]
+            text-gray-600
+            font-semibold
+            px-4
+            py-2
+            rounded-full
+            shadow-sm
             "
-          />
-
-        </Link>
+          >
+            {product.category}
+          </span>
+        </div>
 
         {/* WISHLIST */}
 
@@ -110,140 +122,169 @@ function ProductCard({ product }) {
           onClick={handleWishlist}
           className="
           absolute
-          top-5
-          right-5
-          w-12
-          h-12
+          top-4
+          right-4
+          z-10
+          w-10
+          h-10
+          sm:w-11
+          sm:h-11
           rounded-full
-          bg-white/90
-          backdrop-blur-md
+          bg-white
+          shadow-md
           flex
           items-center
           justify-center
-          shadow-md
           hover:scale-110
-          transition
-          z-20
+          transition-all
+          duration-300
           "
         >
           {isWishlisted ? (
 
-            <FaHeart className="text-red-500 text-lg" />
+            <FaHeart
+              className="
+              text-red-500
+              text-sm
+              sm:text-base
+              "
+            />
 
           ) : (
 
-            <FaRegHeart className="text-black text-lg" />
-
+            <FaRegHeart
+              className="
+              text-black
+              text-sm
+              sm:text-base
+              "
+            />
           )}
         </button>
 
-        {/* ADD TO CART BUTTON */}
+        {/* PRODUCT IMAGE */}
 
-        <div
+        <Link
+          to={`/product/${product.id}`}
           className="
-          absolute
-          bottom-5
-          left-1/2
-          -translate-x-1/2
-          translate-y-10
-          opacity-0
-          group-hover:opacity-100
-          group-hover:translate-y-0
-          transition-all
-          duration-500
-          z-20
+          w-full
+          h-full
+          flex
+          items-center
+          justify-center
           "
         >
-          <button
-            onClick={() =>
-              addToCart(product)
+          <img
+            src={
+              product.images?.[0]
             }
+            alt={product.name}
             className="
-            bg-black
-            text-white
-            px-7
-            py-3
-            rounded-full
-            text-sm
-            font-semibold
-            tracking-wide
-            hover:scale-105
-            transition
+            max-h-full
+            object-contain
+            group-hover:scale-105
+            transition-transform
+            duration-500
             "
-          >
-            Add To Cart
-          </button>
-        </div>
+          />
+        </Link>
       </div>
 
       {/* CONTENT */}
 
       <div
         className="
-        p-7
+        p-5
+        sm:p-6
         flex
         flex-col
-        flex-grow
+        flex-1
         "
       >
-        {/* CATEGORY */}
+        {/* PRODUCT NAME */}
 
-        <p
-          className="
-          text-[11px]
-          uppercase
-          tracking-[4px]
-          text-gray-400
-          mb-4
-          "
+        <Link
+          to={`/product/${product.id}`}
         >
-          {product.category}
-        </p>
-
-        {/* TITLE */}
-
-        <Link to={`/product/${product.id}`}>
-
           <h3
             className="
-            text-[26px]
+            text-lg
+            sm:text-xl
             font-bold
             text-gray-900
-            leading-tight
-            mb-4
-            min-h-[64px]
+            leading-snug
+            mb-3
             hover:text-black
             transition
-            cursor-pointer
+            min-h-[56px]
+            line-clamp-2
             "
           >
             {product.name}
           </h3>
-
         </Link>
 
         {/* DESCRIPTION */}
 
         <p
           className="
+          text-sm
+          sm:text-[15px]
           text-gray-500
-          text-[15px]
           leading-relaxed
-          mb-8
-          min-h-[72px]
+          mb-5
+          line-clamp-2
           "
         >
-          {product.description.slice(0, 80)}...
+          {product.description}
         </p>
 
-        {/* BOTTOM */}
+        {/* RATING */}
+
+        <div
+          className="
+          flex
+          items-center
+          gap-2
+          mb-6
+          "
+        >
+          <FaStar
+            className="
+            text-yellow-400
+            text-sm
+            "
+          />
+
+          <span
+            className="
+            text-sm
+            font-semibold
+            text-gray-700
+            "
+          >
+            {product.rating}
+          </span>
+
+          <span
+            className="
+            text-sm
+            text-gray-400
+            "
+          >
+            Premium Rating
+          </span>
+        </div>
+
+        {/* PRICE + BUTTON */}
 
         <div
           className="
           mt-auto
           flex
-          items-end
+          items-center
           justify-between
+          gap-3
           "
         >
           {/* PRICE */}
@@ -252,10 +293,10 @@ function ProductCard({ product }) {
 
             <h4
               className="
-              text-3xl
+              text-2xl
+              sm:text-3xl
               font-black
               text-black
-              mb-1
               "
             >
               ${product.price}
@@ -263,39 +304,42 @@ function ProductCard({ product }) {
 
             <p
               className="
-              text-sm
+              text-xs
+              sm:text-sm
               text-green-600
               font-medium
+              mt-1
               "
             >
               Free Shipping
             </p>
           </div>
 
-          {/* RATING */}
+          {/* BUTTON */}
 
-          <div
+          <button
+            onClick={() =>
+              addToCart(product)
+            }
             className="
-            flex
-            items-center
-            gap-2
-            bg-gray-100
-            px-4
-            py-2
-            rounded-full
+            bg-black
+            hover:bg-gray-900
+            text-white
+            text-sm
+            sm:text-base
+            px-5
+            sm:px-6
+            py-3
+            rounded-2xl
+            font-semibold
+            transition-all
+            duration-300
+            hover:scale-105
+            whitespace-nowrap
             "
           >
-            <FaStar className="text-yellow-400 text-sm" />
-
-            <span
-              className="
-              text-sm
-              font-semibold
-              "
-            >
-              {product.rating}
-            </span>
-          </div>
+            Add
+          </button>
         </div>
       </div>
     </div>

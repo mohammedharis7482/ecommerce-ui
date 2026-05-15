@@ -8,6 +8,11 @@ import Footer from "../components/Footer";
 
 import products from "../data/products";
 
+import {
+  FaSearch,
+  FaSlidersH,
+} from "react-icons/fa";
+
 function Products() {
 
   // SEARCH
@@ -17,8 +22,10 @@ function Products() {
 
   // CATEGORY
 
-  const [selectedCategory, setSelectedCategory] =
-    useState("All");
+  const [
+    selectedCategory,
+    setSelectedCategory,
+  ] = useState("All");
 
   // SORT
 
@@ -61,7 +68,7 @@ function Products() {
       );
     });
 
-  // SORT PRODUCTS
+  // SORTING
 
   if (sortOption === "low") {
 
@@ -86,7 +93,7 @@ function Products() {
 
   return (
 
-    <div className="bg-[#f8f8f8] min-h-screen">
+    <div className="bg-[#f7f7f7] min-h-screen">
 
       <Navbar />
 
@@ -110,193 +117,257 @@ function Products() {
             uppercase
             tracking-[5px]
             text-gray-400
+            text-sm
             mb-5
             "
           >
-            Premium Collection
+            Premium Store
           </p>
 
           <h1
             className="
-            text-6xl
+            text-5xl
             md:text-7xl
             font-black
-            leading-tight
+            leading-[1]
             text-black
-            max-w-4xl
+            mb-8
+            max-w-5xl
             "
           >
-            Discover Modern Luxury Fashion
+            Discover
+            <br />
+            Modern Fashion.
           </h1>
+
+          <p
+            className="
+            text-lg
+            text-gray-500
+            leading-relaxed
+            max-w-2xl
+            "
+          >
+            Explore curated luxury
+            streetwear, premium fashion,
+            and modern essentials crafted
+            for the next generation.
+          </p>
         </div>
       </section>
 
-      {/* FILTER BAR */}
+      {/* FILTER SECTION */}
 
-      <section className="px-6 pb-12">
+      <section className="px-6 pb-14">
 
         <div
           className="
           max-w-7xl
           mx-auto
           bg-white
-          rounded-[30px]
+          rounded-[32px]
           p-6
-          shadow-sm
+          md:p-8
           border
           border-gray-100
+          shadow-sm
           "
         >
           <div
             className="
             flex
             flex-col
-            lg:flex-row
+            xl:flex-row
             gap-6
-            items-center
-            justify-between
+            xl:items-center
+            xl:justify-between
             "
           >
             {/* SEARCH */}
 
-            <input
-              type="text"
-              placeholder="Search premium products..."
-              value={search}
-              onChange={(e) =>
-                setSearch(e.target.value)
-              }
+            <div
               className="
+              relative
               w-full
-              lg:w-[320px]
-              px-6
-              py-4
-              rounded-2xl
-              border
-              border-gray-200
-              outline-none
-              focus:border-black
-              transition
+              xl:w-[350px]
               "
-            />
+            >
+              <FaSearch
+                className="
+                absolute
+                left-5
+                top-1/2
+                -translate-y-1/2
+                text-gray-400
+                "
+              />
 
-            {/* CATEGORIES */}
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={search}
+                onChange={(e) =>
+                  setSearch(
+                    e.target.value
+                  )
+                }
+                className="
+                w-full
+                pl-14
+                pr-5
+                py-4
+                rounded-2xl
+                border
+                border-gray-200
+                outline-none
+                focus:border-black
+                bg-[#fafafa]
+                transition
+                "
+              />
+            </div>
+
+            {/* CATEGORY CHIPS */}
 
             <div
               className="
               flex
               flex-wrap
               gap-3
-              justify-center
               "
             >
-              {categories.map((category) => (
+              {categories.map(
+                (category) => (
 
-                <button
-                  key={category}
-                  onClick={() =>
-                    setSelectedCategory(
-                      category
-                    )
-                  }
-                  className={`
-                    px-5
-                    py-3
-                    rounded-full
-                    text-sm
-                    font-medium
-                    transition
-                    
-                    ${
-                      selectedCategory ===
-                      category
-                        ? "bg-black text-white"
-                        : "bg-gray-100 text-black hover:bg-gray-200"
+                  <button
+                    key={category}
+                    onClick={() =>
+                      setSelectedCategory(
+                        category
+                      )
                     }
-                  `}
-                >
-                  {category}
-                </button>
+                    className={`
+                      px-5
+                      py-3
+                      rounded-full
+                      text-sm
+                      font-semibold
+                      transition-all
+                      duration-300
+                      
+                      ${
+                        selectedCategory ===
+                        category
+                          ? "bg-black text-white shadow-lg"
+                          : "bg-gray-100 text-black hover:bg-gray-200"
+                      }
+                    `}
+                  >
+                    {category}
+                  </button>
 
-              ))}
+                )
+              )}
             </div>
 
             {/* SORT */}
 
-            <select
-              value={sortOption}
-              onChange={(e) =>
-                setSortOption(
-                  e.target.value
-                )
-              }
+            <div
               className="
-              px-5
-              py-4
-              rounded-2xl
-              border
-              border-gray-200
-              outline-none
-              bg-white
+              flex
+              items-center
+              gap-4
               "
             >
-              <option value="default">
+              <FaSlidersH
+                className="
+                text-gray-500
+                "
+              />
 
-                Featured
+              <select
+                value={sortOption}
+                onChange={(e) =>
+                  setSortOption(
+                    e.target.value
+                  )
+                }
+                className="
+                px-5
+                py-4
+                rounded-2xl
+                border
+                border-gray-200
+                bg-[#fafafa]
+                outline-none
+                "
+              >
+                <option value="default">
+                  Featured
+                </option>
 
-              </option>
+                <option value="low">
+                  Price Low → High
+                </option>
 
-              <option value="low">
+                <option value="high">
+                  Price High → Low
+                </option>
 
-                Price Low → High
-
-              </option>
-
-              <option value="high">
-
-                Price High → Low
-
-              </option>
-
-              <option value="rating">
-
-                Highest Rated
-
-              </option>
-            </select>
+                <option value="rating">
+                  Highest Rated
+                </option>
+              </select>
+            </div>
           </div>
         </div>
       </section>
 
       {/* RESULTS */}
 
-      <section className="px-6 pb-6">
+      <section className="px-6 pb-10">
 
         <div
           className="
           max-w-7xl
           mx-auto
           flex
-          items-center
-          justify-between
+          flex-col
+          md:flex-row
+          md:items-center
+          md:justify-between
+          gap-4
           "
         >
-          <h2
-            className="
-            text-2xl
-            font-bold
-            "
-          >
-            Showing {
-              filteredProducts.length
-            } Products
-          </h2>
+          <div>
+
+            <h2
+              className="
+              text-3xl
+              md:text-4xl
+              font-black
+              mb-2
+              "
+            >
+              All Products
+            </h2>
+
+            <p
+              className="
+              text-gray-500
+              "
+            >
+              Showing {
+                filteredProducts.length
+              } premium products
+            </p>
+          </div>
         </div>
       </section>
 
       {/* PRODUCTS GRID */}
 
-      <section className="px-6 pb-24">
+      <section className="px-6 pb-28">
 
         <div
           className="
