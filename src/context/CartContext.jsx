@@ -1,37 +1,19 @@
 import {
   createContext,
   useState,
-  useEffect,
 } from "react";
+
+import toast from "react-hot-toast";
 
 export const CartContext =
   createContext();
 
-function CartProvider({ children }) {
-
-  // LOAD CART FROM LOCAL STORAGE
+function CartProvider({
+  children,
+}) {
 
   const [cartItems, setCartItems] =
-    useState(() => {
-
-      const savedCart =
-        localStorage.getItem("cart");
-
-      return savedCart
-        ? JSON.parse(savedCart)
-        : [];
-    });
-
-  // SAVE CART TO LOCAL STORAGE
-
-  useEffect(() => {
-
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(cartItems)
-    );
-
-  }, [cartItems]);
+    useState([]);
 
   // ADD TO CART
 
@@ -46,116 +28,100 @@ function CartProvider({ children }) {
     if (existingItem) {
 
       setCartItems(
-
         cartItems.map((item) =>
-
           item.id === product.id
-
             ? {
                 ...item,
-
                 quantity:
-                  item.quantity + 1,
+                  item.quantity +
+                  (product.quantity || 1),
               }
-
             : item
         )
+      );
+
+      toast.success(
+        "Cart Updated"
       );
 
     } else {
 
       setCartItems([
         ...cartItems,
-
         {
           ...product,
-
-          quantity: 1,
+          quantity:
+            product.quantity || 1,
         },
       ]);
+
+      toast.success(
+        "Added To Cart"
+      );
     }
   };
 
-  // REMOVE
+  // REMOVE FROM CART
 
   const removeFromCart = (id) => {
 
     setCartItems(
-
       cartItems.filter(
         (item) => item.id !== id
       )
     );
+
+    toast.error(
+      "Removed From Cart"
+    );
   };
 
-  // INCREASE
+  // INCREASE QUANTITY
 
-  const increaseQuantity = (id) => {
+  const increaseQuantity = (
+    id
+  ) => {
 
     setCartItems(
-
       cartItems.map((item) =>
-
         item.id === id
-
           ? {
               ...item,
-
               quantity:
                 item.quantity + 1,
             }
-
           : item
       )
     );
   };
 
-  // DECREASE
+  // DECREASE QUANTITY
 
-  const decreaseQuantity = (id) => {
+  const decreaseQuantity = (
+    id
+  ) => {
 
     setCartItems(
-
       cartItems.map((item) =>
-
-        item.id === id
-
+        item.id === id &&
+        item.quantity > 1
           ? {
               ...item,
-
               quantity:
-                item.quantity > 1
-                  ? item.quantity - 1
-                  : 1,
+                item.quantity - 1,
             }
-
           : item
       )
     );
   };
-
-  // TOTAL ITEMS
-
-  const totalItems =
-    cartItems.reduce(
-
-      (total, item) =>
-
-        total + item.quantity,
-
-      0
-    );
 
   // SUBTOTAL
 
   const subtotal =
     cartItems.reduce(
-
       (total, item) =>
-
         total +
         item.price * item.quantity,
-
       0
     );
 
@@ -164,17 +130,10 @@ function CartProvider({ children }) {
     <CartContext.Provider
       value={{
         cartItems,
-
         addToCart,
-
         removeFromCart,
-
         increaseQuantity,
-
         decreaseQuantity,
-
-        totalItems,
-
         subtotal,
       }}
     >

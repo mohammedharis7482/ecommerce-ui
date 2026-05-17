@@ -1,7 +1,10 @@
-
 import React from "react";
 
 import ReactDOM from "react-dom/client";
+
+import {
+  BrowserRouter,
+} from "react-router-dom";
 
 import App from "./App";
 
@@ -11,30 +14,37 @@ import CartProvider from "./context/CartContext";
 
 import WishlistProvider from "./context/WishlistContext";
 
-import SmoothScroll from "./components/SmoothScroll";
+import ThemeProvider from "./context/ThemeContext";
+
+import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(
   document.getElementById("root")
 ).render(
+
   <React.StrictMode>
 
-    <CartProvider>
+    <BrowserRouter>
 
-      <WishlistProvider>
+      <ThemeProvider>
 
-        {/* SMOOTH SCROLL */}
+        <WishlistProvider>
 
-        <SmoothScroll />
+          <CartProvider>
 
-        {/* MAIN APP */}
+            <Toaster
+              position="top-right"
+            />
 
-      
-        
-        <App />
+            <App />
 
-      </WishlistProvider>
+          </CartProvider>
 
-    </CartProvider>
+        </WishlistProvider>
+
+      </ThemeProvider>
+
+    </BrowserRouter>
 
   </React.StrictMode>
 );

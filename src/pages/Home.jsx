@@ -1,4 +1,11 @@
-import { Link } from "react-router-dom";
+import {
+  Link,
+} from "react-router-dom";
+
+import {
+  useEffect,
+  useState,
+} from "react";
 
 import {
   FaArrowRight,
@@ -13,12 +20,37 @@ import Footer from "../components/Footer";
 
 import ProductCard from "../components/ProductCard";
 
+import ProductSkeleton from "../components/ProductSkeleton";
+
 import products from "../data/products";
 
 function Home() {
 
+  // LOADING
+
+  const [loading, setLoading] =
+    useState(true);
+
+  useEffect(() => {
+
+    const timer =
+      setTimeout(() => {
+
+        setLoading(false);
+
+      }, 1500);
+
+    return () =>
+      clearTimeout(timer);
+
+  }, []);
+
+  // FEATURED PRODUCTS
+
   const featuredProducts =
     products.slice(0, 4);
+
+  // BEST SELLERS
 
   const bestSellers =
     products.slice(4, 8);
@@ -29,17 +61,16 @@ function Home() {
 
       <Navbar />
 
-      {/* HERO */}
+      {/* HERO SECTION */}
 
       <section
         className="
-        pt-28
-        sm:pt-32
-        lg:pt-36
+        pt-32
+        md:pt-36
         pb-20
-        sm:pb-24
-        px-4
-        sm:px-6
+        md:pb-24
+        px-5
+        md:px-6
         "
       >
         <div
@@ -55,20 +86,16 @@ function Home() {
         >
           {/* LEFT */}
 
-          <div
-            className="
-            order-2
-            lg:order-1
-            "
-          >
+          <div>
+
             <p
               className="
               uppercase
-              tracking-[4px]
+              tracking-[5px]
               text-gray-400
-              mb-5
+              mb-6
               text-xs
-              sm:text-sm
+              md:text-sm
               "
             >
               Modern Luxury Fashion
@@ -78,7 +105,7 @@ function Home() {
               className="
               text-5xl
               sm:text-6xl
-              lg:text-8xl
+              md:text-7xl
               font-black
               leading-[0.95]
               text-black
@@ -95,7 +122,7 @@ function Home() {
             <p
               className="
               text-base
-              sm:text-lg
+              md:text-lg
               text-gray-600
               leading-relaxed
               max-w-xl
@@ -111,31 +138,23 @@ function Home() {
 
             {/* BUTTONS */}
 
-            <div
-              className="
-              flex
-              flex-col
-              sm:flex-row
-              gap-4
-              "
-            >
+            <div className="flex flex-wrap gap-4">
+
               <Link
                 to="/products"
                 className="
                 bg-black
-                hover:bg-gray-900
                 text-white
-                px-8
+                px-7
+                md:px-8
                 py-4
                 rounded-full
                 font-semibold
                 flex
                 items-center
-                justify-center
                 gap-3
-                transition-all
-                duration-300
-                hover:scale-105
+                hover:bg-gray-900
+                transition
                 "
               >
                 Shop Now
@@ -148,13 +167,13 @@ function Home() {
                 bg-white
                 border
                 border-gray-200
-                px-8
+                px-7
+                md:px-8
                 py-4
                 rounded-full
                 font-semibold
                 hover:border-black
-                transition-all
-                duration-300
+                transition
                 "
               >
                 Explore Collections
@@ -164,17 +183,12 @@ function Home() {
 
           {/* RIGHT */}
 
-          <div
-            className="
-            relative
-            order-1
-            lg:order-2
-            "
-          >
+          <div className="relative">
+
             <div
               className="
-              rounded-[32px]
-              sm:rounded-[40px]
+              rounded-[35px]
+              md:rounded-[40px]
               overflow-hidden
               shadow-2xl
               "
@@ -186,7 +200,7 @@ function Home() {
                 w-full
                 h-[500px]
                 sm:h-[650px]
-                lg:h-[780px]
+                lg:h-[720px]
                 object-cover
                 "
               />
@@ -199,12 +213,12 @@ function Home() {
               absolute
               bottom-5
               left-5
-              sm:bottom-8
-              sm:left-8
+              md:bottom-8
+              md:left-8
               bg-white/90
               backdrop-blur-md
               p-5
-              sm:p-6
+              md:p-6
               rounded-3xl
               shadow-xl
               "
@@ -212,7 +226,7 @@ function Home() {
               <p
                 className="
                 text-xs
-                sm:text-sm
+                md:text-sm
                 text-gray-400
                 mb-2
                 "
@@ -223,7 +237,7 @@ function Home() {
               <h3
                 className="
                 text-xl
-                sm:text-2xl
+                md:text-2xl
                 font-black
                 "
               >
@@ -236,20 +250,13 @@ function Home() {
 
       {/* FEATURES */}
 
-      <section
-        className="
-        px-4
-        sm:px-6
-        pb-20
-        sm:pb-24
-        "
-      >
+      <section className="px-5 md:px-6 pb-20 md:pb-24">
+
         <div
           className="
           max-w-7xl
           mx-auto
           grid
-          grid-cols-1
           md:grid-cols-3
           gap-6
           "
@@ -272,7 +279,7 @@ function Home() {
               title: "Secure Payment",
               text: "Protected payments with premium checkout security.",
             },
-          ].map((feature, index) => (
+          ].map((item, index) => (
 
             <div
               key={index}
@@ -287,13 +294,10 @@ function Home() {
               duration-300
               "
             >
-              <div
-                className="
-                text-3xl
-                mb-5
-                "
-              >
-                {feature.icon}
+              <div className="text-3xl mb-5">
+
+                {item.icon}
+
               </div>
 
               <h3
@@ -303,11 +307,13 @@ function Home() {
                 mb-3
                 "
               >
-                {feature.title}
+                {item.title}
               </h3>
 
               <p className="text-gray-500 leading-relaxed">
-                {feature.text}
+
+                {item.text}
+
               </p>
             </div>
 
@@ -317,13 +323,8 @@ function Home() {
 
       {/* FEATURED PRODUCTS */}
 
-      <section
-        className="
-        px-4
-        sm:px-6
-        pb-24
-        "
-      >
+      <section className="px-5 md:px-6 pb-24">
+
         <div className="max-w-7xl mx-auto">
 
           {/* HEADER */}
@@ -335,7 +336,7 @@ function Home() {
             md:flex-row
             md:items-end
             md:justify-between
-            gap-5
+            gap-6
             mb-14
             "
           >
@@ -344,10 +345,9 @@ function Home() {
               <p
                 className="
                 uppercase
-                tracking-[4px]
+                tracking-[5px]
                 text-gray-400
-                text-xs
-                sm:text-sm
+                text-sm
                 mb-4
                 "
               >
@@ -357,7 +357,7 @@ function Home() {
               <h2
                 className="
                 text-4xl
-                sm:text-5xl
+                md:text-5xl
                 font-black
                 "
               >
@@ -368,10 +368,11 @@ function Home() {
             <Link
               to="/products"
               className="
+              text-black
+              font-semibold
               flex
               items-center
               gap-3
-              font-semibold
               "
             >
               View All
@@ -380,7 +381,7 @@ function Home() {
             </Link>
           </div>
 
-          {/* GRID */}
+          {/* PRODUCTS */}
 
           <div
             className="
@@ -388,39 +389,47 @@ function Home() {
             grid-cols-1
             sm:grid-cols-2
             lg:grid-cols-4
-            gap-6
-            sm:gap-8
+            gap-8
             "
           >
-            {featuredProducts.map(
-              (product) => (
+            {
+              loading
+                ? Array.from({
+                    length: 4,
+                  }).map(
+                    (_, index) => (
 
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                />
+                      <ProductSkeleton
+                        key={index}
+                      />
 
-              )
-            )}
+                    )
+                  )
+
+                : featuredProducts.map(
+                    (product) => (
+
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                      />
+
+                    )
+                  )
+            }
           </div>
         </div>
       </section>
 
-      {/* BANNER */}
+      {/* COLLECTION BANNER */}
 
-      <section
-        className="
-        px-4
-        sm:px-6
-        pb-24
-        "
-      >
+      <section className="px-5 md:px-6 pb-24">
+
         <div
           className="
           max-w-7xl
           mx-auto
-          rounded-[32px]
-          sm:rounded-[40px]
+          rounded-[40px]
           overflow-hidden
           relative
           "
@@ -430,8 +439,8 @@ function Home() {
             alt="Collection"
             className="
             w-full
-            h-[500px]
-            sm:h-[650px]
+            h-[450px]
+            md:h-[600px]
             object-cover
             "
           />
@@ -440,26 +449,21 @@ function Home() {
             className="
             absolute
             inset-0
-            bg-black/45
+            bg-black/40
             flex
             items-center
             "
           >
-            <div
-              className="
-              p-6
-              sm:p-12
-              lg:p-20
-              "
-            >
+            <div className="p-8 md:p-20">
+
               <p
                 className="
                 uppercase
-                tracking-[4px]
+                tracking-[5px]
                 text-white/70
-                text-xs
-                sm:text-sm
                 mb-5
+                text-xs
+                md:text-sm
                 "
               >
                 Exclusive Collection
@@ -468,8 +472,7 @@ function Home() {
               <h2
                 className="
                 text-4xl
-                sm:text-6xl
-                lg:text-7xl
+                md:text-7xl
                 font-black
                 text-white
                 leading-tight
@@ -493,8 +496,6 @@ function Home() {
                 py-4
                 rounded-full
                 font-semibold
-                hover:bg-gray-200
-                transition
                 "
               >
                 Shop Collection
@@ -508,13 +509,8 @@ function Home() {
 
       {/* BEST SELLERS */}
 
-      <section
-        className="
-        px-4
-        sm:px-6
-        pb-24
-        "
-      >
+      <section className="px-5 md:px-6 pb-24">
+
         <div className="max-w-7xl mx-auto">
 
           <div className="mb-14">
@@ -522,10 +518,9 @@ function Home() {
             <p
               className="
               uppercase
-              tracking-[4px]
+              tracking-[5px]
               text-gray-400
-              text-xs
-              sm:text-sm
+              text-sm
               mb-4
               "
             >
@@ -535,7 +530,7 @@ function Home() {
             <h2
               className="
               text-4xl
-              sm:text-5xl
+              md:text-5xl
               font-black
               "
             >
@@ -549,53 +544,59 @@ function Home() {
             grid-cols-1
             sm:grid-cols-2
             lg:grid-cols-4
-            gap-6
-            sm:gap-8
+            gap-8
             "
           >
-            {bestSellers.map(
-              (product) => (
+            {
+              loading
+                ? Array.from({
+                    length: 4,
+                  }).map(
+                    (_, index) => (
 
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                />
+                      <ProductSkeleton
+                        key={index}
+                      />
 
-              )
-            )}
+                    )
+                  )
+
+                : bestSellers.map(
+                    (product) => (
+
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                      />
+
+                    )
+                  )
+            }
           </div>
         </div>
       </section>
 
       {/* NEWSLETTER */}
 
-      <section
-        className="
-        px-4
-        sm:px-6
-        pb-24
-        "
-      >
+      <section className="px-5 md:px-6 pb-24">
+
         <div
           className="
           max-w-5xl
           mx-auto
           bg-black
-          rounded-[32px]
-          sm:rounded-[40px]
+          rounded-[40px]
           p-8
-          sm:p-14
-          lg:p-20
+          md:p-20
           text-center
           "
         >
           <p
             className="
             uppercase
-            tracking-[4px]
+            tracking-[5px]
             text-white/50
-            text-xs
-            sm:text-sm
+            text-sm
             mb-5
             "
           >
@@ -605,8 +606,7 @@ function Home() {
           <h2
             className="
             text-4xl
-            sm:text-5xl
-            lg:text-6xl
+            md:text-6xl
             font-black
             text-white
             leading-tight
@@ -622,11 +622,10 @@ function Home() {
             className="
             text-white/70
             text-base
-            sm:text-lg
+            md:text-lg
             max-w-2xl
             mx-auto
             mb-10
-            leading-relaxed
             "
           >
             Get updates about premium

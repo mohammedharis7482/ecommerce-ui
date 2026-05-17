@@ -1,8 +1,9 @@
 import {
   createContext,
   useState,
-  useEffect,
 } from "react";
+
+import toast from "react-hot-toast";
 
 export const WishlistContext =
   createContext();
@@ -11,34 +12,10 @@ function WishlistProvider({
   children,
 }) {
 
-  // LOAD FROM LOCAL STORAGE
-
-  const [wishlistItems,
-    setWishlistItems] =
-    useState(() => {
-
-      const savedWishlist =
-        localStorage.getItem(
-          "wishlist"
-        );
-
-      return savedWishlist
-        ? JSON.parse(savedWishlist)
-        : [];
-    });
-
-  // SAVE TO LOCAL STORAGE
-
-  useEffect(() => {
-
-    localStorage.setItem(
-      "wishlist",
-      JSON.stringify(
-        wishlistItems
-      )
-    );
-
-  }, [wishlistItems]);
+  const [
+    wishlistItems,
+    setWishlistItems,
+  ] = useState([]);
 
   // ADD TO WISHLIST
 
@@ -58,6 +35,10 @@ function WishlistProvider({
         ...wishlistItems,
         product,
       ]);
+
+      toast.success(
+        "Added To Wishlist"
+      );
     }
   };
 
@@ -68,11 +49,13 @@ function WishlistProvider({
   ) => {
 
     setWishlistItems(
-
       wishlistItems.filter(
-        (item) =>
-          item.id !== id
+        (item) => item.id !== id
       )
+    );
+
+    toast.error(
+      "Removed From Wishlist"
     );
   };
 
@@ -81,9 +64,7 @@ function WishlistProvider({
     <WishlistContext.Provider
       value={{
         wishlistItems,
-
         addToWishlist,
-
         removeFromWishlist,
       }}
     >
